@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .half {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+
+        .green {
+            background-color: rgb(0, 197, 0);
+        }
+
+        .gray {
+            background-color: gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .numbers {
+            font-size: 24px;
+            margin-top: 10px;
+            display: flex;
+            color: black;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+        }
+        .mensagem{
+            padding: 510px 0 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="half green">
+            <img src="images.png" alt="img">
+            MegaSena
+        </div>
+        <div class="half gray">
+            <div id="numbers" class="numbers"></div>
+            
+        </div>
+    </div>
+    <script src="api-loteria/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSorteio();
+        });
+
+        function loadSorteio() {
+            fetch('http://loteria.cronogramatds.online/sorteio/megasena')
+                .then(response => response.json())
+                .then(function (data) {
+                    console.log(data);
+                    displayNumbers(data.numerosSorteados);
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar os números do sorteio:', error);
+                });
+        }
+
+        function displayNumbers(numbers) {
+            const numbersElement = document.getElementById('numbers');
+            numbers.forEach(number => {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                circle.textContent = number;
+                numbersElement.appendChild(circle);
+
+                const mensagem = document.createElement('div');
+                mensagem.innerHTML = `<p> pao com ovo</p>`
+            });
+        }
+    </script>
+</body>
+
+</html>
