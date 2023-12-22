@@ -22,6 +22,7 @@
             flex: 1;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
@@ -38,6 +39,26 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+        }
+
+        .purple {
+            background-color: purple;
+        }
+
+        .pink {
+            background-color: pink;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .orange {
+            background-color: orange;
+        }
+
+        .brown {
+            background-color: brown;
         }
 
         .numbers {
@@ -57,21 +78,35 @@
             justify-content: center;
             margin: 5px;
         }
-        .mensagem{
+
+        .mensagem {
             padding: 510px 0 0 0;
+            font-size: 20px;
+        }
+
+        #sorteioSelect {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="half green">
+        <div id="leftHalf" class="half green">
+            <select id="sorteioSelect" onchange="loadSorteio()">
+                <option value="megasena">MegaSena</option>
+                <option value="quina">Quina</option>
+                <option value="lotofacil">LotoFacil</option>
+                <option value="lotomania">LotoMania</option>
+                <option value="timemania">TimeMania</option>
+                <option value="diadesorte">Dia de Sorte</option>
+            </select>
             <img src="images.png" alt="img">
-            MegaSena
+            <p id="sorteioLabel">MegaSena</p>
         </div>
-        <div class="half gray">
+        <div class="half gray" id="rightHalf">
             <div id="numbers" class="numbers"></div>
-            
+            <div id="mensagem" class="mensagem"></div>
         </div>
     </div>
     <script src="api-loteria/api.js"></script>
@@ -81,7 +116,44 @@
         });
 
         function loadSorteio() {
-            fetch('http://loteria.cronogramatds.online/sorteio/megasena')
+            const sorteioSelect = document.getElementById('sorteioSelect');
+            const sorteioSelecionado = sorteioSelect.value;
+
+            const leftHalf = document.getElementById('leftHalf');
+            const mensagemElement = document.getElementById('mensagem');
+            const sorteioLabel = document.getElementById('sorteioLabel');
+
+            if (sorteioSelecionado === 'megasena') {
+                leftHalf.classList.remove('purple', 'pink', 'blue', 'orange', 'brown');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'MegaSena';
+            } else if (sorteioSelecionado === 'quina') {
+                leftHalf.classList.add('purple');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'Quina';
+            } else if (sorteioSelecionado === 'lotofacil') {
+                leftHalf.classList.remove('purple', 'pink', 'blue', 'orange', 'brown', 'green');
+                leftHalf.classList.add('pink');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'LotoFacil';
+            } else if (sorteioSelecionado === 'lotomania') {
+                leftHalf.classList.remove('purple', 'pink', 'blue', 'orange', 'brown', 'green');
+                leftHalf.classList.add('orange');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'LotoMania';
+            } else if (sorteioSelecionado === 'timemania') {
+                leftHalf.classList.remove('purple', 'pink', 'blue', 'orange', 'brown', 'green');
+                leftHalf.classList.add('green');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'TimeMania';
+            } else if (sorteioSelecionado === 'diadesorte') {
+                leftHalf.classList.remove('purple', 'pink', 'blue', 'orange', 'brown', 'green');
+                leftHalf.classList.add('brown');
+                mensagemElement.textContent = '';
+                sorteioLabel.textContent = 'Dia de Sorte';
+            }
+
+            fetch(`http://loteria.cronogramatds.online/sorteio/${sorteioSelecionado}`)
                 .then(response => response.json())
                 .then(function (data) {
                     console.log(data);
@@ -94,14 +166,12 @@
 
         function displayNumbers(numbers) {
             const numbersElement = document.getElementById('numbers');
+            numbersElement.innerHTML = '';
             numbers.forEach(number => {
                 const circle = document.createElement('div');
                 circle.classList.add('circle');
                 circle.textContent = number;
                 numbersElement.appendChild(circle);
-
-                const mensagem = document.createElement('div');
-                mensagem.innerHTML = `<p> pao com ovo</p>`
             });
         }
     </script>
