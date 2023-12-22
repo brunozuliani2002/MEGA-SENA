@@ -34,11 +34,25 @@
         }
 
         .gray {
+            position: relative;
             background-color: gray;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            padding-left: 600px; 
+        }
+
+        .gray:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30px;
+            width: 30px; 
+            height: 100%;
+            border-radius: 0 50px 50px 0; 
+            background-color: gray;
+            z-index: 1; 
         }
 
         .purple {
@@ -66,18 +80,22 @@
             margin-top: 10px;
             display: flex;
             color: black;
+            justify-content: center;
+            margin-right: 410px;
         }
 
         .circle {
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 5px;
-        }
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    margin-top: 450px;
+  
+}
 
         .mensagem {
             padding: 510px 0 0 0;
